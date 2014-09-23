@@ -13,3 +13,12 @@ This library is for [WiFi Shield](http://www.seeedstudio.com/depot/wifi-shield-p
 + setup WiFi AP
 + join Ad-Hoc network
 + UDP communication
+
+## Tested Board List
++ Arduino UDE
++ GR-KURUMI
+
+
+* Modified and Add Functions by embeddist
+
+
