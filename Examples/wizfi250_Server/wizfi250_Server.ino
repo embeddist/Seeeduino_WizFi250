@@ -1,6 +1,19 @@
+/*
+  Released 16 Feb 2014 
+  Elefantasy
+
+  Modified 20 SEP 2014
+  Soohwan@wiznet.co.kr 
+*/
+#if defined(REL_GR_KURUMI)
+;
+#else
 #include <Arduino.h>
 #include <SoftwareSerial.h>
+#endif
 #include "WizFi250.h"
+
+//#define SPI_ENABLE
 
 #define SSID      "STEST"
 #define KEY       "87654321"
@@ -9,21 +22,27 @@
 #define  SOCKET_TYPE   "TSN"    //socket type include: TSN,TCN,TSS,TCS,USN,UCN
 #define LOCAL_PORT     9090
  
+#if defined(SPI_ENABLE)
 #define spi_CS  8
+#endif
+#define wizfi250_rst  9
  
-WizFi250 wizfi250(&Serial1);
+WizFi250 wizfi250(&Serial1, wizfi250_rst);
 boolean returnValue=false;
 void setup() {
  
-Serial1.begin(115200);
-Serial.begin(115200);
+#if defined(SPI_ENABLE)
 pinMode(spi_CS,OUTPUT);
+digitalWrite(spi_CS, LOW);    
+#else
+Serial1.begin(115200);
+#endif
+Serial.begin(115200);
 Serial.println("--------- WIZFI250 TEST --------");
-// wait for initilization of Wizfi250
-  delay(1000);
-  Serial.println("Join " SSID );
+  wizfi250.hw_reset();
   wizfi250.reset();
   delay(1000);
+  Serial.println("Join " SSID );
   wizfi250.sendCommand("AT+WLEAVE\r");
    delay(1000);
    if (!wizfi250.join(SSID, KEY, AUTH)) {

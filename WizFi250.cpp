@@ -12,6 +12,17 @@ WizFi250::WizFi250(Stream *serial)
     associated = false;
     error_count = 0;
 }
+WizFi250::WizFi250(Stream *serial, uint8_t rst_pin)
+{
+    instance = this;
+    this->serial = serial;
+    setTimeout(DEFAULT_WAIT_RESPONSE_TIME);
+    associated = false;
+    error_count = 0;
+    this->rst_pin = rst_pin;
+    pinMode(this->rst_pin,OUTPUT);
+    digitalWrite(this->rst_pin, HIGH);    
+}
 
 WizFi250::WizFi250(Stream &serial)
 {
@@ -56,6 +67,15 @@ void WizFi250::reset()
     sendCommand("AT+MRESET\r", "[OK]");
     delay(1000);
 }
+
+void WizFi250::hw_reset()
+{
+	digitalWrite(rst_pin, LOW);
+	delay(500);
+	digitalWrite(rst_pin, HIGH);
+	delay(1000);
+}
+
 void WizFi250::factoryReset() {
 	sendCommand("AT+MFDEF=FR\r", "[OK]");
     delay(1000);

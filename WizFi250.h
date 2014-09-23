@@ -13,6 +13,7 @@
 class WizFi250 : public Stream
 {
 public:
+    WizFi250(Stream *, uint8_t rst_pin);
     WizFi250(Stream *);
     WizFi250(Stream &);
 
@@ -29,6 +30,7 @@ public:
 
    
     void reset();
+    void hw_reset();
     void factoryReset();
    
     boolean leave();
@@ -58,6 +60,7 @@ private:
     boolean associated;
     uint8_t dhcp;
     uint8_t error_count;
+    uint8_t rst_pin;
 
 };
 
