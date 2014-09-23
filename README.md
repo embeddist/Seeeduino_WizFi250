@@ -19,6 +19,6 @@ This library is for [WiFi Shield](http://www.seeedstudio.com/depot/wifi-shield-p
 + GR-KURUMI
 
 
-* Modified and Add Functions by embeddist
+### Modified and Add Functions by embeddist
 
 
